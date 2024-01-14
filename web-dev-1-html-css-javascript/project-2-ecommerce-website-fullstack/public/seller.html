@@ -4,9 +4,44 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE-edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Clothing: Seller</title>
+        <title>Clothing: Seller Dashboard</title>
+
+        <link rel="stylesheet" href="css/signup.css">
+        <link rel="stylesheet" href="css/seller.css">
+
     </head>
     <body>
+        <img src="img/loader.gif" class="loader" alt="">
 
+        <div class="alert-box">
+            <img src="img/error.png" class="alert-img" alt="">
+            <p class="alert-msg">Error message</p>
+        </div>
+
+        <img src="img/dark-logo.png" class="logo" alt="">
+
+        <div class="become-seller">
+            <p class="heading">Become a Seller!</p>
+            <p class="des">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Error non exercitationem qui debitis magnam! Repellendus tempore id alias cumque vitae accusantium blanditiis recusandae accusamus doloribus, a corporis adipisci. Facere aut voluptatum, consequuntur quidem nemo modi quaerat veritatis nihil! Doloremque, ut asperiores dolores libero cumque atque! Nostrum enim aspernatur quas, similique porro nihil delectus nobis dolorum illum optio nam, assumenda totam ullam doloribus iusto voluptate earum omnis, fugit ab! Vel non, ullam laboriosam quibusdam ipsum vero sapiente placeat esse veritatis obcaecati ab vitae aliquid, recusandae ipsam ex neque alias corporis expedita qui tempora minima natus! Tempore voluptatum ipsam earum officia laborum?</p>
+            <button class="btn" id="apply-btn">Apply for Seller account!</button>
+        </div>
+
+        <div class="apply-form hide">
+            <input type="text" id="business-name" placeholder="business name / company name / shop name">
+            <textarea id="business-add" placeholder="address"></textarea>
+            <textarea id="about" placeholder="about"></textarea>
+            <input type="text" id="number" placeholder="number">
+
+            <input type="checkbox" checked class="checkbox" id="terms-and-cond">
+            <label for="terms-and-cond">agree to our <a href="">terms and conditions</a></label>
+            <br>
+            <input type="checkbox" checked class="checkbox" id="legitInfo">
+            <label for="legitInfo">all information is legit</a></label>
+            <button class="submit-btn" id="apply-form-btn">apply</button>
+                
+        </div>
+
+        <script src="js/token.js"></script>
+        <script src="js/seller.js"></script>
     </body>
 </html>
