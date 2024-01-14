@@ -3,6 +3,15 @@ const admin = require('firebase-admin');
 const bcrypt = require('bcrypt');
 const path = require('path');
 
+// firebase admin setup
+var serviceAccount = require("./ecom-website-f1423-firebase-adminsdk-uh977-b434bf3ba3.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
+let db = admin.firestore();
+
 let staticPath = path.join(__dirname, "public");
 
 const app = express();
@@ -38,7 +47,59 @@ app.post('/signup', (req, res) => {
         return res.json({'alert': 'invalid number, please enter valid one'});
     } else if(!tac){
         return res.json({'alert': 'you must agree to our terms and conditions'});
-    }       
+    } 
+    // store user in db
+    db.collection('users').doc(email).get().then(user => {
+        if(user.exists){
+            return res.json({'alert': 'email already exists'});
+        } else{
+            // encrypt the password before storing it.
+            bcrypt.genSalt(10, (err, salt) => {
+                bcrypt.hash(password, salt, (err, hash) => {
+                    req.body.password = hash;
+                    db.collection('users').doc(email).set(req.body).then(data => {
+                        res.json({
+                            name: req.body.name,
+                            email: req.body.email,
+                            seller: req.body.seller,
+                        })
+                    })
+                })
+            })
+        }
+    })
+})
+
+// login route
+app.get('/login', (req, res) => {
+    res.sendFile(path.join(staticPath, "login.html"));
+})
+
+app.post('/login', (req, res) => {
+    let { email, password} = req.body;
+
+    if(!email.length || !password.length){
+        return res.json({'alert!' : 'fill all the inputs!'})
+    }
+
+    db.collection('users').doc(email).get().then(user => {
+        if(!user.exists){
+            return res.json({'alert!' : 'login email does not exist!'})
+        } else{
+            bcrypt.compare(password, user.data().password, (err, result) => {
+                if(result){
+                    let data = user.data();
+                    return res.json({
+                        name: data.name,
+                        email: data.email,
+                        seller: data.seller,
+                    })
+                } else{
+                    return res.json({'alert!' : 'password is incorrect!'})
+                }
+            })
+        }
+    })
 })
  
 // 404 route
